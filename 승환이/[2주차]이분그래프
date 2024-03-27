@@ -1,0 +1,108 @@
+#include <iostream>
+#include <queue>
+#include<tuple>
+#include<algorithm>
+#include<vector>
+using namespace std;
+vector<int>arr[20000];
+vector<int>visitied;
+#define RED 5
+#define BLUE 4
+int n, k;
+int m;
+bool TrueB = true;
+void input();
+void dfs(int n);
+void output();
+void initializ();
+
+void initializ()
+{
+	
+	for (int i = 0; i <= n; i++)
+	{
+		arr[i].clear();
+		visitied[i] = 0;
+	}
+	TrueB = true;
+}
+void dfs(int n)
+{
+	
+	if (visitied[n]==0)
+	{
+		visitied[n] = RED;
+	}
+
+	for (auto next : arr[n])
+	{
+	
+		if (visitied[next] == 0)
+		{
+			if (visitied[n] == RED)
+			{
+				visitied[next] = BLUE;
+			
+			}
+			else if (visitied[n] == BLUE)
+			{
+				visitied[next] = RED;	
+				
+			}
+			dfs(next);
+		}
+
+		else if (visitied[next] == visitied[n])
+			{
+				TrueB = false;
+
+			}
+
+	}
+
+}
+void input()
+{
+	visitied.resize(n + 1, 0);
+	arr->resize(n + 1);
+	for (int i = 0; i < m; i++)
+	{
+		int a, b;
+		cin >> a >> b;
+		arr[a].push_back(b);
+		arr[b].push_back(a);
+	}
+	for (int i = 1; i <= n; i++)
+	{
+		if (visitied[i] == 0)
+		{
+			dfs(i);
+		}
+	}
+	return;
+}
+void output()
+{
+	if (TrueB == true)
+	{
+		cout << "YES"<<"\n";
+	}
+	else
+	{
+		cout << "NO"<<"\n";
+	}
+}
+int main() {
+
+	int k;
+	cin >> k;
+	for (int i = 0; i < k; i++)
+	{
+		cin >> n >> m;
+		input();
+		output();
+		initializ();
+	}
+	
+	return 0;
+}
